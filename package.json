@@ -1,0 +1,13 @@
+{
+  "name": "opennodeblog",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon server"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "express": "~4.16.1",
+    "vue": "^3.5.18"
+  }
+}
