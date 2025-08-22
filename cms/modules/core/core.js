@@ -3,7 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 
 var indexRouter = require('../index/index-router.js');
-var usersRouter = require('../user/user-router.js');
+var usersRouter = require('../user/UserRouter.js');
 
 var app = express();
 
