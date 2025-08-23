@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
-const db = mongoose.createConnection(process.env.MONGODB);
-export default db
-    
+module.exports = function(){
+    const db = mongoose.createConnection(process.env.MONGODB, (err)=>{console.log(err)});
+    return db;
+}
