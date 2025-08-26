@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --env-file=.env server"
+    "server": "nodemon --env-file=.env server.js",
+    "node": "node --env-file=.env server"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

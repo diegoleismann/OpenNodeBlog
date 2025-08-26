@@ -5,7 +5,7 @@ const port = 3000
 var server = http.createServer(app);
 server.listen(port);
 server.on('error', (err)=>{
-  console.log(err);
+  console.log(err, 'ON ERROR');
 });
 server.on('listening', (err)=>{
   console.log('listening '+port)

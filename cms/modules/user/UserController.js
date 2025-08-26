@@ -1,6 +1,8 @@
 const passwordHash = require('../core/passwordHash.js');
 const UserModel = require('./UserModel.js')
-
+const SessionModel = require('../session/SessionModel.js')
+const { cipher } =require('../../modules/core/encript.js');
+const RandomString = require('../core/randomString.js');
 class UserController {
   constructor() { }
 
@@ -45,7 +47,7 @@ class UserController {
       role_id,
     }
 
-    await UserModel.findByIdAndUpdate(id, { $set: update})
+    await UserModel.findByIdAndUpdate(id, {update})
     const updated = await UserModel.findOne({"_id":id});
     updated.password="";
     res.json({updated});
@@ -54,23 +56,33 @@ class UserController {
   async delete(req, res) { 
     const { id } = req.params;
     const User = await UserModel.findOne({"_id":id});
-    User.status = 'inactive'
-    User.save();
-    User.password="";
-    res.json({user: User});
+    if(User){
+      User.status = 'inactive'
+      User.save();
+      User.password="";
+      res.json({user: User});
+    }else{
+      res.json({error:'userNotFound'})
+    }
+    
   }
 
   async getById(req, res) {
     const { id } = req.params;
     const User = await UserModel.findOne({"_id":id, 'status':'active'});
-    User.password="";
-    res.json({user: User});
+    if(User){
+      User.password="";
+      res.json({user: User});
+    }else{
+      res.json({error:'userNotFound'})
+    }
+    
   }
 
   async getByPage(req, res) {
-    const { page } = req.params;
+    let { page } = req.params;
     const limit = 10;
-    const skip = page * limit
+    const skip = Number(page) * limit
     const userList = await UserModel.find({'status': 'active'})
     .skip(skip)
     .limit(limit)
@@ -86,6 +98,30 @@ class UserController {
 
   getBySearch(req, res) {
 
+  }
+
+  async auth(req, res){
+    const { email, password} = req.body;
+    
+    const query = {
+      email,
+      password: password ? passwordHash(password) : '-'
+    }
+    const User = await UserModel.findOne(query);
+    if(User){
+      User.password="";
+      const Session = new SessionModel({user_id: User._id, token: RandomString()})
+      const session_created = Session.save();
+      if(session_created){
+        const AccessToken = cipher(Session.user_id+":"+Session.token)
+        res.json({user: User, access_token: AccessToken });
+      }else{
+        res.json({"error":"sessionError"})
+      }
+      
+    }else{
+      res.json({error:"authenticationError"})
+    }
   }
 }
 
