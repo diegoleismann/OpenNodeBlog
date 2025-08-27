@@ -12,5 +12,8 @@
     "express": "~4.16.1",
     "mongoose": "^8.17.2",
     "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
   }
 }
