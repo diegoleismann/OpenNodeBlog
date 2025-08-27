@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const indexRouter = require('../index/index-router.js');
 const usersRouter = require('../user/UserRouter.js');
@@ -11,6 +12,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './cms/files')));
+
+var corsOptions = {
+  origin: [process.env.FRONTEND_URL],
+  optionsSuccessStatus: 200,
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+}
+
+//[]TASK add to database list of domains cors
+app.use(cors(corsOptions))
 
 app.use((req, res, next) => {
   console.log((new Date()).toISOString() + ' ' + req.method + ' ' + req.url);
