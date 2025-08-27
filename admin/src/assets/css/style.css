@@ -1,0 +1,18 @@
+html,
+body,
+* {
+  font-family: "Lato", sans-serif;
+}
+.link,
+.link:visited,
+.link:active {
+  color: #777;
+  text-decoration: none;
+}
+.link:hover {
+  opacity: 0.8;
+}
+
+.v-field--focused .v-field__outline {
+  color: #0bf !important;
+}
