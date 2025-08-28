@@ -1,14 +1,23 @@
 <script setup>
-import { ref } from 'vue'
-import Request from '../../request'
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { UserStore } from '../../stores/user.store'
 const email = ref('')
 const password = ref('')
+const router = useRouter()
 async function login() {
-  const body = {
-    email: email.value,
-    password: password.value,
+  try {
+    const user = await UserStore.auth(email.value, password.value)
+    if (user.error) {
+      alert('Erro de Autenticação')
+      return
+    }
+    if (user._id) {
+      router.push('/dashboard')
+    }
+  } catch (error) {
+    console.log(error)
   }
-  const data = await Request('POST', '/users/auth', body)
 }
 </script>
 
@@ -20,12 +29,8 @@ async function login() {
       <v-card class="login-container pa-5 rounded-lg">
         <v-row>
           <v-col>
-            <h2
-              class="mb-3"
-              align="center"
-            >
-              Login
-            </h2>
+            <h2 class="mb-3 text-center">Login</h2>
+
             <v-text-field
               icon-color="#0bf"
               title="E-mail"
@@ -37,7 +42,8 @@ async function login() {
               density="compact"
               hide-details
               variant="outlined"
-            ></v-text-field>
+            />
+
             <v-text-field
               icon-color="#0bf"
               title="Senha"
@@ -51,20 +57,23 @@ async function login() {
               hide-details
               variant="outlined"
               active-color="blue"
-            ></v-text-field>
+            />
+
             <a
               href="/reset-password"
               class="link d-block text-center mb-3"
             >
               Esqueceu a senha?
             </a>
+
             <v-btn
               class="bg-blue text-white"
               elevation="1"
               block
               @click="login()"
-              >Entrar</v-btn
             >
+              Entrar
+            </v-btn>
           </v-col>
         </v-row>
       </v-card>
