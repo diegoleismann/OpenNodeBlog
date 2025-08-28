@@ -13,9 +13,9 @@ export const UserStore = reactive({
       {
         _id: _id,
         name: name,
-        email: this.email,
-        role_id: this.role_id,
-        image: this.image
+        email: email,
+        role_id: role_id,
+        image: image
       }
     ))
     this._id = _id
@@ -26,15 +26,16 @@ export const UserStore = reactive({
   },
 
   get() {
-    const user = localStorage.getItem('user')
-    if (user) {
-      const { name, email, _id, role_id, image } = JSON.parse(user)
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      const { name, email, _id, role_id, image } = JSON.parse(userData)
       this.name = name
       this.email = email
       this._id = _id
       this.role_id = role_id
       this.image = image
     }
+    return this
   },
 
   clear() {
@@ -59,5 +60,10 @@ export const UserStore = reactive({
       this.save(data.user)
     }
     return this;
+  },
+
+  isLogged() {
+    this.get();
+    return this._id ? true : false
   }
 })

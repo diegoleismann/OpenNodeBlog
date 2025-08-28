@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, './cms/files')));
+app.use(express.static(path.join(__dirname, '/../../../cms/files')));
 
 var corsOptions = {
   origin: [process.env.FRONTEND_URL],
@@ -30,13 +30,13 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/docs', (req,res)=>{
+app.use('/docs', (req, res) => {
   res.json(docs);
 })
 app.use(function (req, res, next) {
   console.log('notfound', req.url);
   res.status(404)
-  res.json({"error":"RouteNotFound","documentation":"/docs"});
+  res.json({ "error": "RouteNotFound", "documentation": "/docs" });
 });
 
 

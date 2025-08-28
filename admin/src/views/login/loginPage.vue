@@ -13,7 +13,7 @@ async function login() {
       return
     }
     if (user._id) {
-      router.push('/dashboard')
+      router.push('/posts')
     }
   } catch (error) {
     console.log(error)

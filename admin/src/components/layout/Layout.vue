@@ -1,5 +1,16 @@
 <script setup>
-import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { ref, onMounted, computed } from 'vue'
+import { UserStore } from '../../stores/user.store'
+const router = useRouter()
+const userImage = computed(() => UserStore.image)
+const userName = computed(() => UserStore.name)
+const userEmail = computed(() => UserStore.email)
+onMounted(() => {
+  if (!UserStore.isLogged()) {
+    router.push('/login')
+  }
+})
 </script>
 
 <template>
@@ -7,9 +18,9 @@ import { ref } from 'vue'
     <v-navigation-drawer permanent>
       <v-list nav>
         <v-list-item
-          prepend-avatar="https://randomuser.me/api/portraits/men/61.jpg"
-          subtitle="Admin"
-          title="Fulano"
+          :prepend-avatar="userImage"
+          :subtitle="userEmail"
+          :title="userName"
           append-icon="mdi-chevron-down"
           value="account"
         ></v-list-item>
@@ -20,18 +31,14 @@ import { ref } from 'vue'
         nav
       >
         <v-list-item
-          active-class="bg-blue text-white"
-          prepend-icon="mdi-view-grid"
-          title="Dashboard"
-          value="dashboard"
-        ></v-list-item>
-        <v-list-item
+          to="/posts"
           active-class="bg-blue text-white"
           prepend-icon="mdi-list-box"
           title="Posts"
           value="shared"
         ></v-list-item>
         <v-list-item
+          to="/users"
           active-class="bg-blue text-white"
           prepend-icon="mdi-account"
           title="Users"
