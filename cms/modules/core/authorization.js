@@ -15,6 +15,11 @@ const AccessToken = (id) => {
 const AuthorizationToken = async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     res.json({ token })
+    if (token) {
+        next()
+    } else {
+        res.json('TokenNotFound')
+    }
 }
 
 module.exports = {
