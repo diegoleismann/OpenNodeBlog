@@ -1,9 +1,9 @@
 const passwordHash = require('../core/passwordHash.js');
 const UserModel = require('./UserModel.js');
-const SessionModel = require('../session/SessionModel.js');
+const { AccessToken } = require('../core/authorization.js')
 const UserData = require('./UserData.js');
-const { cipher } = require('../../modules/core/encript.js');
-const RandomString = require('../core/randomString.js');
+
+
 class UserController {
   constructor() { }
 
@@ -110,17 +110,15 @@ class UserController {
     }
     const User = await UserModel.findOne(query);
     if (User) {
-      const Session = new SessionModel({ user_id: User._id, token: RandomString() })
-      const session_created = Session.save();
-      if (session_created) {
-        const AccessToken = cipher(Session.user_id + ":" + Session.token)
+      const AccessToken = AccessToken(User._id)
+      if (AccessToken) {
         res.json({ user: UserData(User), access_token: AccessToken });
       } else {
         res.json({ "error": "sessionError" })
       }
 
     } else {
-      res.json({ error: "authenticationError" })
+      res.json({ "error": "authenticationError" })
     }
   }
 }

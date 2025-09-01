@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const indexRouter = require('../index/index-router.js');
 const usersRouter = require('../user/UserRouter.js');
+const postRouter = require('../post/PostRouter.js')
 const docs = require('../../docs/index.js')
 const app = express();
 
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/post', postRouter)
 app.use('/docs', (req, res) => {
   res.json(docs);
 })
