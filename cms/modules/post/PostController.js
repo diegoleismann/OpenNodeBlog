@@ -91,7 +91,7 @@ class PostController {
     res.json({ posts: postFormated, total, page: Number(page) });
   }
 
-  getBySearch(req, res) {
+  async getBySearch(req, res) {
     let { text, page } = req.params;
     const limit = 10;
     const skip = Number(page) * limit
