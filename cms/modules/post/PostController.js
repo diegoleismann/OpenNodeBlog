@@ -1,5 +1,6 @@
 const PostModel = require('./PostModel.js')
 const PostData = require('./PostData.js')
+
 class PostController {
   constructor() { }
 
@@ -62,6 +63,53 @@ class PostController {
     } else {
       res.json({ error: 'PostNotFound' })
     }
+  }
+
+
+  async getById(req, res) {
+    const { id } = req.params;
+    const Post = await PostModel.findOne({ "_id": id, 'status': 'active' });
+    if (Post) {
+      res.json({ post: PostData(Post) });
+    } else {
+      res.json({ error: 'userNotFound' })
+    }
+
+  }
+
+  async getByPage(req, res) {
+    let { page } = req.params;
+    const limit = 10;
+    const skip = Number(page) * limit
+    const postList = await PostModel.find({ 'status': 'active' })
+      .skip(skip)
+      .limit(limit)
+      .exec()
+
+    const total = await PostModel.countDocuments();
+    const postFormated = postList.map(item => { return PostData(item) })
+    res.json({ posts: postFormated, total, page: Number(page) });
+  }
+
+  getBySearch(req, res) {
+    let { text, page } = req.params;
+    const limit = 10;
+    const skip = Number(page) * limit
+    const postList = await PostModel.find({
+      'status': 'active',
+      '$or': [
+        { 'title': { '$regex': new RegExp(text, 'i') } },
+        { 'content': { '$regex': new RegExp(text, 'i') } },
+        { 'url': { '$regex': new RegExp(text, 'i') } },
+      ]
+    })
+      .skip(skip)
+      .limit(limit)
+      .exec()
+
+    const total = await PostModel.countDocuments();
+    const postFormated = postList.map(item => { return PostData(item) })
+    res.json({ posts: postFormated, total, page: Number(page) });
   }
 }
 

@@ -1,8 +1,8 @@
-const { cipher } = require('./encript.js');
+const { cipher, decipher } = require('./encript.js');
 const SessionModel = require('../session/SessionModel.js');
 const RandomString = require('./randomString.js');
 
-const AccessToken = (id) => {
+const accessToken = (id) => {
     const Session = new SessionModel({ user_id: id, token: RandomString() })
     const session_created = Session.save();
     if (session_created) {
@@ -12,17 +12,25 @@ const AccessToken = (id) => {
     }
 }
 
-const AuthorizationToken = async (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    res.json({ token })
+const authorizationToken = async (req, res, next) => {
+    const token = req.headers?.authorization?.split(' ')[1];
     if (token) {
-        next()
+        const config = decipher(token)
+        const sessionId = config.split(':')[0];
+        const sessionToken = config.split(':')[1];
+        const session_selected = await SessionModel.findOne({ "user_id": sessionId, "token": sessionToken });
+        if (session_selected) {
+            next()
+        } else {
+            res.json({ "error": "SessionInvalid" })
+        }
+
     } else {
-        res.json('TokenNotFound')
+        res.json({ "error": "TokenNotFound" })
     }
 }
 
 module.exports = {
-    AccessToken,
-    AuthorizationToken
+    accessToken,
+    authorizationToken
 }

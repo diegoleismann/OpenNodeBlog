@@ -1,6 +1,6 @@
 const passwordHash = require('../core/passwordHash.js');
 const UserModel = require('./UserModel.js');
-const { AccessToken } = require('../core/authorization.js')
+const Auth = require('../core/authorization.js')
 const UserData = require('./UserData.js');
 
 
@@ -97,8 +97,24 @@ class UserController {
     res.json({ users: userFormated, total, page: Number(page) });
   }
 
-  getBySearch(req, res) {
+  async getBySearch(req, res) {
+    let { text, page } = req.params;
+    const limit = 10;
+    const skip = Number(page) * limit
+    const usersList = await UserModel.find({
+      'status': 'active',
+      '$or': [
+        { 'name': { '$regex': new RegExp(text, 'i') } },
+        { 'email': { '$regex': new RegExp(text, 'i') } }
+      ]
+    })
+      .skip(skip)
+      .limit(limit)
+      .exec()
 
+    const total = await UserModel.countDocuments();
+    const usersFormated = usersList.map(item => { return UserData(item) })
+    res.json({ users: usersFormated, total, page: Number(page) });
   }
 
   async auth(req, res) {
@@ -110,9 +126,9 @@ class UserController {
     }
     const User = await UserModel.findOne(query);
     if (User) {
-      const AccessToken = AccessToken(User._id)
-      if (AccessToken) {
-        res.json({ user: UserData(User), access_token: AccessToken });
+      const accessToken = Auth.accessToken(User._id)
+      if (accessToken) {
+        res.json({ user: UserData(User), access_token: accessToken });
       } else {
         res.json({ "error": "sessionError" })
       }
