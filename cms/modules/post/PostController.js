@@ -1,6 +1,7 @@
 const PostModel = require('./PostModel.js')
 const PostData = require('./PostData.js')
-
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId
 class PostController {
   constructor() { }
 

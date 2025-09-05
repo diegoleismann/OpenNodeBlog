@@ -27,6 +27,14 @@ export const PostStore = reactive({
         this.posts = data.posts;
         this.loading = false;
     },
+    async getById(id) {
+        const data = await Request('GET', `/post/${id}`)
+        if (data.error) {
+            console.log(data.error);
+        }
+        this.posts = data.posts;
+        this.loading = false;
+    },
 
     clear() {
         this._id = null;

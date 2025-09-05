@@ -1,3 +1,17 @@
+<script setup>
+import { DateFormat } from '../../helper/date'
+import { computed, onMounted } from 'vue'
+import Layout from '../../components/layout/Layout.vue'
+import { PostStore } from '../../stores/post.store'
+import DataTableHeaders from './DataTableHeaders'
+const loading = computed(() => PostStore.loading)
+const listPosts = computed(() => PostStore.posts)
+onMounted(() => {
+  PostStore.getByPage()
+})
+
+const headers = DataTableHeaders
+</script>
 <template>
   <Layout>
     <v-row class="pa-4">
@@ -49,46 +63,3 @@
     </v-row>
   </Layout>
 </template>
-<script setup>
-import { DateFormat } from '../../helper/date'
-import { computed, onMounted } from 'vue'
-import Layout from '../../components/layout/Layout.vue'
-import { PostStore } from '../../stores/post.store'
-const loading = computed(() => PostStore.loading)
-const listPosts = computed(() => PostStore.posts)
-onMounted(() => {
-  PostStore.getByPage()
-})
-
-const headers = [
-  {
-    title: 'Created At',
-    key: 'created_at',
-    cellProps: {
-      class: 'v-data-table-date',
-    },
-  },
-  {
-    title: 'Title',
-    key: 'title',
-    cellProps: {
-      class: 'v-data-table-title',
-    },
-  },
-
-  {
-    title: 'URL',
-    key: 'url',
-    cellProps: {
-      class: 'v-data-table-url',
-    },
-  },
-  {
-    title: 'Status',
-    key: 'status',
-    cellProps: {
-      class: 'v-data-table-status',
-    },
-  },
-]
-</script>
