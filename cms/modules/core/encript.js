@@ -1,6 +1,6 @@
 const crypto = require('node:crypto');
 const RandomString = require('./randomString');
-const key = Buffer.from(process.env.SESSION_KEY, 'utf-8'); 
+const key = Buffer.from(process.env.SESSION_KEY, 'utf-8');
 const iv = Buffer.from(process.env.SESSION_IV, 'utf-8');
 const algorithm = 'aes-256-cbc'
 
@@ -10,7 +10,8 @@ const cipher = (text) => {
   encrypted += cipher.final('hex');
   return encrypted;
 }
-const decipher = (text)=>{
+const decipher = (text) => {
+  console.log(text);
   const decipher = crypto.createDecipheriv(algorithm, key, iv);
   let decrypted = decipher.update(text, 'hex', 'utf8');
   decrypted += decipher.final('utf8');

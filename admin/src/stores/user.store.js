@@ -7,7 +7,7 @@ export const UserStore = reactive({
   role_id: '',
   image: '',
 
-  save({ name, email, _id, role_id, image, token }) {
+  save({ name, email, _id, role_id, image }, token) {
     localStorage.setItem('authorization', token)
     localStorage.setItem('user', JSON.stringify(
       {
@@ -57,7 +57,7 @@ export const UserStore = reactive({
       console.log(data.error)
     }
     if (data.user) {
-      this.save(data.user)
+      this.save(data.user, data.access_token)
     }
     return this;
   },

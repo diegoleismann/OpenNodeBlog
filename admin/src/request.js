@@ -1,14 +1,19 @@
 async function Request(method, url, body) {
   const base_url = 'http://localhost:3000'
   const token = localStorage.getItem('authorization')
-  const response = await fetch(base_url + url, {
+  const options = {
     method: method,
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': token
-    },
-    body: JSON.stringify(body)
-  });
+      'Content-Type': 'application/json'
+    }
+  }
+  if (token) {
+    options.headers['Authorization'] = `Bearer ${token}`
+  }
+  if (['POST', 'PUT'].includes(method)) {
+    options.body = body ? JSON.stringify(body) : ''
+  }
+  const response = await fetch(base_url + url, options);
   const data = await response.json();
   return data;
 }

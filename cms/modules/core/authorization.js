@@ -1,4 +1,6 @@
 const { cipher, decipher } = require('./encript.js');
+const mongose = require('mongoose')
+const ObjectId = mongose.Types.ObjectId;
 const SessionModel = require('../session/SessionModel.js');
 const RandomString = require('./randomString.js');
 
@@ -14,11 +16,19 @@ const accessToken = (id) => {
 
 const authorizationToken = async (req, res, next) => {
     const token = req.headers?.authorization?.split(' ')[1];
+
     if (token) {
         const config = decipher(token)
         const sessionId = config.split(':')[0];
         const sessionToken = config.split(':')[1];
-        const session_selected = await SessionModel.findOne({ "user_id": sessionId, "token": sessionToken });
+        const UserObjectId = new ObjectId(sessionId)
+        const query = {
+            "user_id": UserObjectId,
+            "token": sessionToken
+
+        }
+        console.log(query, 'QUERY');
+        const session_selected = await SessionModel.findOne(query);
         if (session_selected) {
             next()
         } else {

@@ -1,7 +1,7 @@
 html,
 body,
 * {
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 .link,
 .link:visited,
@@ -15,4 +15,17 @@ body,
 
 .v-field--focused .v-field__outline {
   color: #0bf !important;
+}
+
+.v-data-table-date {
+  width: 150px;
+}
+.v-data-table-title {
+  width: auto;
+}
+.v-data-table-status {
+  width: 120px;
+}
+.v-data-table-url {
+  width: 220px;
 }

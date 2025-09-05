@@ -68,6 +68,10 @@ class PostController {
 
   async getById(req, res) {
     const { id } = req.params;
+    if (!id) {
+      res.json({ error: 'ParamIdNotFound' })
+    }
+    const PostObjectId = new ObjectId(id);
     const Post = await PostModel.findOne({ "_id": id, 'status': 'active' });
     if (Post) {
       res.json({ post: PostData(Post) });
@@ -81,7 +85,7 @@ class PostController {
     let { page } = req.params;
     const limit = 10;
     const skip = Number(page) * limit
-    const postList = await PostModel.find({ 'status': 'active' })
+    const postList = await PostModel.find({ 'status': 'public' })
       .skip(skip)
       .limit(limit)
       .exec()

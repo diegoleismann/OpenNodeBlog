@@ -31,14 +31,14 @@ onMounted(() => {
         nav
       >
         <v-list-item
-          to="/posts"
+          to="/cms/posts"
           active-class="bg-blue text-white"
           prepend-icon="mdi-list-box"
           title="Posts"
           value="shared"
         ></v-list-item>
         <v-list-item
-          to="/users"
+          to="/cms/users"
           active-class="bg-blue text-white"
           prepend-icon="mdi-account"
           title="Users"

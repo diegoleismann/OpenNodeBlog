@@ -13,13 +13,14 @@ const isLogged = (to, from, next) => {
 }
 const routes = [
   {
-    path: '/posts',
+    path: '/cms/posts',
     component: PostsPage,
     beforeEnter: isLogged
   },
-  { path: '/users', component: UsersPage },
-  { path: '/login', component: LoginPage },
-  { path: '/', component: ThemePage },
+  { path: '/cms/users', component: UsersPage },
+  { path: '/cms/login', component: LoginPage },
+  { path: '/cms', redirect: '/cms/posts' },
+  { path: '/:pathMatch(.*)*', redirect: '/cms/login' },
 ]
 
 const router = createRouter({

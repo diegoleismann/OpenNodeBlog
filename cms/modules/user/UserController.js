@@ -124,6 +124,7 @@ class UserController {
       email,
       password: password ? passwordHash(password) : '-'
     }
+    console.log(query);
     const User = await UserModel.findOne(query);
     if (User) {
       const accessToken = Auth.accessToken(User._id)

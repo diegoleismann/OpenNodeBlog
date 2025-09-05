@@ -14,35 +14,81 @@
               <v-btn class="bg-blue text-white">Novo</v-btn>
             </v-toolbar>
           </v-card-title>
-          <v-data-table :items="listPosts"> </v-data-table>
+          <v-loading v-if="loading"></v-loading>
+          <v-data-table
+            :headers="headers"
+            :items="listPosts"
+            hide-default-footer
+          >
+            <template v-slot:[`item.created_at`]="{ item }">
+              {{ DateFormat(item.created_at) }}
+            </template>
+            <template v-slot:[`item.title`]="{ item }">
+              <strong>
+                <RouterLink
+                  class="link"
+                  :to="'/cms/post/' + item._id"
+                >
+                  {{ item.title }}
+                </RouterLink>
+              </strong>
+            </template>
+            <template v-slot:[`item.url`]="{ item }">
+              <strong>
+                <RouterLink
+                  class="link"
+                  :to="'/post/' + item.url"
+                >
+                  /{{ item.url }}
+                </RouterLink>
+              </strong>
+            </template>
+          </v-data-table>
         </v-card>
       </v-col>
     </v-row>
   </Layout>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { DateFormat } from '../../helper/date'
+import { computed, onMounted } from 'vue'
 import Layout from '../../components/layout/Layout.vue'
-const listPosts = ref([
+import { PostStore } from '../../stores/post.store'
+const loading = computed(() => PostStore.loading)
+const listPosts = computed(() => PostStore.posts)
+onMounted(() => {
+  PostStore.getByPage()
+})
+
+const headers = [
   {
-    created_at: '10/12/2030 10:15',
-    title: 'title',
-    url: '/post/title',
+    title: 'Created At',
+    key: 'created_at',
+    cellProps: {
+      class: 'v-data-table-date',
+    },
   },
   {
-    created_at: '10/12/2030 10:15',
-    title: 'title',
-    url: '/post/title',
+    title: 'Title',
+    key: 'title',
+    cellProps: {
+      class: 'v-data-table-title',
+    },
+  },
+
+  {
+    title: 'URL',
+    key: 'url',
+    cellProps: {
+      class: 'v-data-table-url',
+    },
   },
   {
-    created_at: '10/12/2030 10:15',
-    title: 'title',
-    url: '/post/title',
+    title: 'Status',
+    key: 'status',
+    cellProps: {
+      class: 'v-data-table-status',
+    },
   },
-  {
-    created_at: '10/12/2030 10:15',
-    title: 'title',
-    url: '/post/title',
-  },
-])
+]
 </script>
