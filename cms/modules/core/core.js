@@ -29,18 +29,17 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/post', postRouter)
-app.use('/docs', (req, res) => {
+//app.use('/', indexRouter);
+app.use('/api/user', usersRouter);
+app.use('/api/post', postRouter)
+app.use('/api/docs', (req, res) => {
   res.json(docs);
 })
+
 app.use(function (req, res, next) {
   console.log('notfound', req.url);
   res.status(404)
-  res.json({ "error": "RouteNotFound", "documentation": "/docs" });
+  res.json({ "error": "RouteNotFound", "documentation": "/api/docs" });
 });
-
-
 
 module.exports = app;

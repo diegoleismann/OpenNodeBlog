@@ -27,7 +27,6 @@ const authorizationToken = async (req, res, next) => {
             "token": sessionToken
 
         }
-        console.log(query, 'QUERY');
         const session_selected = await SessionModel.findOne(query);
         if (session_selected) {
             next()

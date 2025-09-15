@@ -1,5 +1,5 @@
 async function Request(method, url, body) {
-  const base_url = 'http://localhost:3000'
+  const base_url = 'http://localhost/api'
   const token = localStorage.getItem('authorization')
   const options = {
     method: method,

@@ -24,8 +24,14 @@ const headers = DataTableHeaders
                 class="mx-2"
                 vertical
                 opacity="0"
-              ></v-divider>
-              <v-btn class="bg-blue text-white">Novo</v-btn>
+              >
+              </v-divider>
+              <v-btn
+                class="bg-blue text-white"
+                to="/cms/post/"
+              >
+                New
+              </v-btn>
             </v-toolbar>
           </v-card-title>
           <v-loading v-if="loading"></v-loading>

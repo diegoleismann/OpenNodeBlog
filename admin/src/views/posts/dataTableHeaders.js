@@ -13,7 +13,6 @@ export default [
             class: 'v-data-table-title',
         },
     },
-
     {
         title: 'URL',
         key: 'url',

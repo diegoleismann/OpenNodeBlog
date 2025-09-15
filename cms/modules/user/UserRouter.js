@@ -7,6 +7,7 @@ const User = new UserController();
 router.post('/auth/', User.auth);
 router.get('/search/:text/:page', Auth.authorizationToken, User.getBySearch);
 router.get('/search/:text', Auth.authorizationToken, User.getBySearch);
+router.get('/search/', Auth.authorizationToken, User.getBySearch);
 router.get('/page/:page', Auth.authorizationToken, User.getByPage);
 router.get('/:id', Auth.authorizationToken, User.getById);
 router.post('/', Auth.authorizationToken, User.create);

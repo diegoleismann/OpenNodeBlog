@@ -1,7 +1,5 @@
 const PostModel = require('./PostModel.js')
 const PostData = require('./PostData.js')
-const mongoose = require('mongoose')
-const ObjectId = mongoose.Types.ObjectId
 class PostController {
   constructor() { }
 
@@ -29,7 +27,7 @@ class PostController {
     }
   }
 
-  async update() {
+  async update(req, res) {
     const {
       title,
       status,
@@ -37,6 +35,7 @@ class PostController {
       url,
       author_id,
     } = req.body
+    const { id } = req.params
 
     const update = {
       title,
@@ -46,7 +45,7 @@ class PostController {
       author_id,
     }
     try {
-      await PostModel.findByIdAndUpdate(id, { update })
+      await PostModel.updateOne({ "_id": id }, update)
       const updated = await PostModel.findOne({ "_id": id });
       res.json({ updated: PostData(updated) });
     } catch (e) {
@@ -72,8 +71,8 @@ class PostController {
     if (!id) {
       res.json({ error: 'ParamIdNotFound' })
     }
-    const PostObjectId = new ObjectId(id);
-    const Post = await PostModel.findOne({ "_id": id, 'status': 'active' });
+    const query = { "_id": id }
+    const Post = await PostModel.findOne(query);
     if (Post) {
       res.json({ post: PostData(Post) });
     } else {
@@ -86,9 +85,15 @@ class PostController {
     let { page } = req.params;
     const limit = 10;
     const skip = Number(page) * limit
-    const postList = await PostModel.find({ 'status': 'public' })
+    const postList = await PostModel.find({
+      '$or': [
+        { 'status': 'public' },
+        { 'status': 'draft' }
+      ]
+    })
       .skip(skip)
       .limit(limit)
+      .sort({ 'created_at': -1 })
       .exec()
 
     const total = await PostModel.countDocuments();
@@ -101,7 +106,10 @@ class PostController {
     const limit = 10;
     const skip = Number(page) * limit
     const postList = await PostModel.find({
-      'status': 'active',
+      '$or': [
+        { 'status': 'public' },
+        { 'status': 'draft' }
+      ],
       '$or': [
         { 'title': { '$regex': new RegExp(text, 'i') } },
         { 'content': { '$regex': new RegExp(text, 'i') } },
@@ -110,6 +118,7 @@ class PostController {
     })
       .skip(skip)
       .limit(limit)
+      .sort({ 'created_at': -1 })
       .exec()
 
     const total = await PostModel.countDocuments();

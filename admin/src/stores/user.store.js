@@ -3,9 +3,10 @@ import Request from '../request'
 export const UserStore = reactive({
   name: '',
   email: '',
-  _id: '',
+  _id: null,
   role_id: '',
   image: '',
+  users: [],
 
   save({ name, email, _id, role_id, image }, token) {
     localStorage.setItem('authorization', token)
@@ -52,7 +53,7 @@ export const UserStore = reactive({
       email: email,
       password: password,
     }
-    const data = await Request('POST', '/users/auth', body)
+    const data = await Request('POST', '/user/auth', body)
     if (data.error) {
       console.log(data.error)
     }
@@ -60,6 +61,19 @@ export const UserStore = reactive({
       this.save(data.user, data.access_token)
     }
     return this;
+  },
+  async create() {
+
+  },
+  async getBySearch(text = '') {
+    const data = await Request('GET', `/user/search/${text}`)
+    if (data.error) {
+      console.log(data.error)
+    }
+    if (data.user) {
+      this.save(data.user, data.access_token)
+    }
+    this.users = data.users
   },
 
   isLogged() {
