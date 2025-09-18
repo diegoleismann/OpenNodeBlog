@@ -65,7 +65,17 @@ class PostController {
     }
   }
 
-
+  async getPublic(req, res) {
+    const query = { "status": 'public' }
+    const limit = 10;
+    const postList = await PostModel
+      .find(query)
+      .limit(limit)
+      .sort({ 'created_at': -1 })
+      .exec()
+    const postFormated = postList.map(item => { return PostData(item) })
+    res.json({ posts: postFormated });
+  }
   async getById(req, res) {
     const { id } = req.params;
     if (!id) {

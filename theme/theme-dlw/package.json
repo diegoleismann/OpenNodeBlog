@@ -1,0 +1,17 @@
+{
+  "name": "theme-ssr",
+  "version": "1.0.0",
+  "description": "theme ssr vuejs express",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Diego Leismann de Quadros",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "vue": "^3.5.21",
+    "vue-server-renderer": "^2.7.16"
+  }
+}
