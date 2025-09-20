@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 const api_server = require('./cms/modules/core/core');
 const http = require('http');
-const port = parseInt(process.env.PORT) | 80
+const port = parseInt(process.env.PORT) | 8080
+console.log(port);
 const host = process.env.HOST | '0.0.0.0'
 const api = http.createServer(api_server)
 api.listen(port, host, () => console.log('api_server'));
