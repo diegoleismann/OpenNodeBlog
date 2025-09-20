@@ -3,9 +3,9 @@ import { useRouter } from 'vue-router'
 import { ref, onMounted, computed } from 'vue'
 import { UserStore } from '../../stores/user.store'
 const router = useRouter()
-const userImage = computed(() => UserStore.image)
-const userName = computed(() => UserStore.name)
-const userEmail = computed(() => UserStore.email)
+const userImage = computed(() => UserStore.logged.image)
+const userName = computed(() => UserStore.logged.name)
+const userEmail = computed(() => UserStore.logged.email)
 onMounted(() => {
   if (!UserStore.isLogged()) {
     router.push('/login')

@@ -1,14 +1,10 @@
-const template = /*html*/`
-  <div
-    id="header"
-    class="w-100"
-  >
-    <v-container>
-      <v-row>
-        <v-col
-          cols="12"
-          class="d-flex justify-space-between"
-        >
+const html = async () => {
+
+  return  /*html*/`
+  <div id="header">
+    <div class="container">
+      <div class="row">
+        <div class="col col-12 flex">
           <a href="#home">
             <img
               class="logo"
@@ -24,12 +20,12 @@ const template = /*html*/`
               <li class="menu-item"><a href="#contato">Contato</a></li>
             </ul>
           </nav>
-        </v-col>
-      </v-row>
-    </v-container>
+        </div>
+      </div>
+    </div>
   </div>
 `
-export default {
-  name: "HeaderComponent",
-  template
+}
+module.exports = {
+  html
 }

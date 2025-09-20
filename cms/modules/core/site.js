@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const fs = require('fs');
 const compression = require('compression');
 const sirv = require('sirv');
@@ -26,5 +26,5 @@ app.use('/', async (req, res) => {
         res.status(500).end("SITE ERROR")
     }
 })
-
-module.exports = app
+*/
+module.exports = {}

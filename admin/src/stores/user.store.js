@@ -1,14 +1,24 @@
 import { reactive } from 'vue'
 import Request from '../request'
 export const UserStore = reactive({
-  name: '',
-  email: '',
-  _id: null,
-  role_id: '',
-  image: '',
+
+  logged: {
+    name: '',
+    email: '',
+    _id: null,
+    role_id: '',
+    image: '',
+  },
+  form: {
+    name: '',
+    email: '',
+    _id: null,
+    role_id: '',
+    image: '',
+  },
   users: [],
 
-  save({ name, email, _id, role_id, image }, token) {
+  setLogged({ name, email, _id, role_id, image }, token) {
     localStorage.setItem('authorization', token)
     localStorage.setItem('user', JSON.stringify(
       {
@@ -19,33 +29,32 @@ export const UserStore = reactive({
         image: image
       }
     ))
-    this._id = _id
-    this.name = name
-    this.email = email
-    this.role_id = role_id
-    this.image = image
+    this.logged._id = _id
+    this.logged.name = name
+    this.logged.email = email
+    this.logged.role_id = role_id
+    this.logged.image = image
   },
 
-  get() {
+  getLogged() {
     const userData = localStorage.getItem('user')
     if (userData) {
       const { name, email, _id, role_id, image } = JSON.parse(userData)
-      this.name = name
-      this.email = email
-      this._id = _id
-      this.role_id = role_id
-      this.image = image
+      this.logged.name = name
+      this.logged.email = email
+      this.logged._id = _id
+      this.logged.role_id = role_id
+      this.logged.image = image
     }
-    return this
+    return this.logged
   },
 
-  clear() {
-    localStorage.removeItem('user')
-    this._id = ''
-    this.name = ''
-    this.email = ''
-    this.role_id = ''
-    this.image = ''
+  clearLogged() {
+    this.logged._id = ''
+    this.logged.name = ''
+    this.logged.email = ''
+    this.logged.role_id = ''
+    this.logged.image = ''
   },
 
   async auth(email, password) {
@@ -58,11 +67,14 @@ export const UserStore = reactive({
       console.log(data.error)
     }
     if (data.user) {
-      this.save(data.user, data.access_token)
+      this.setLogged(data.user, data.access_token)
     }
-    return this;
+    return this.logged;
   },
   async create() {
+
+  },
+  async update() {
 
   },
   async getBySearch(text = '') {
@@ -70,14 +82,26 @@ export const UserStore = reactive({
     if (data.error) {
       console.log(data.error)
     }
-    if (data.user) {
-      this.save(data.user, data.access_token)
+
+    this.users = data.users
+  },
+  async getByPage(page = 0) {
+    const data = await Request('GET', `/user/page/${page}`)
+    if (data.error) {
+      console.log(data.error)
     }
     this.users = data.users
   },
+  async getById(id) {
+    const data = await Request('GET', `/user/${id}`)
+    if (data.error) {
+      console.log(data.error)
+    }
+    this.form = data.user
+  },
 
   isLogged() {
-    this.get();
-    return this._id ? true : false
+    this.getLogged();
+    return this.logged._id ? true : false
   }
 })

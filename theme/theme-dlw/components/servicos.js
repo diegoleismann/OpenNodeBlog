@@ -1,13 +1,14 @@
 
-const template = /*html*/`
+const html = async () => {
+  return  /*html*/`
 <div id="servicos">
-    <v-container>
-      <v-row>
-        <v-col><h2 class="section-title text-center">Serviços</h2></v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="4">
-          <div class="d-flex justify-center">
+    <div class="container">
+      <div class="row">
+        <div class="col"><h2 class="section-title text-center">Serviços</h2></div>
+      </div>
+      <div class="row">
+        <div class="col col-4">
+          <div class="flex justify-center">
             <div class="big-icon">
               <img src="/images/design.png" />
             </div>
@@ -20,9 +21,9 @@ const template = /*html*/`
             <li>UX Design</li>
             <li>Web Design</li>
           </ul>
-        </v-col>
-        <v-col cols="4">
-          <div class="d-flex justify-center">
+        </div>
+        <div class="col col-4">
+          <div class="flex justify-center">
             <div class="big-icon">
               <img src="/images/desenvolvimento.png" />
             </div>
@@ -39,9 +40,9 @@ const template = /*html*/`
             <li>Integração e API</li>
             <li>Automação e IA</li>
           </ul>
-        </v-col>
-        <v-col cols="4">
-          <div class="d-flex justify-center">
+        </div>
+        <div class="col col-4">
+          <div class="flex justify-center">
             <div class="big-icon">
               <img src="/images/marketing-digital.png" />
             </div>
@@ -56,13 +57,12 @@ const template = /*html*/`
             <li>Social Mídia</li>
             <li>Influencer Marketing</li>
           </ul>
-        </v-col>
-      </v-row>
-    </v-container>
+        </div>
+      </div>
+    </div>
   </div>
   `
-
-export default {
-  name: "ServicosComponent",
-  template
+}
+module.exports = {
+  html
 }

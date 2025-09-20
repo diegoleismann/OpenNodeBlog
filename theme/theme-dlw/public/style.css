@@ -2,6 +2,136 @@ html,
 body {
   font-family: 'Montserrat';
   height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+.text-white {
+  color: #fff;
+}
+.text-center {
+  text-align: center;
+}
+.pad-10 {
+  padding: 10px;
+}
+.pad-20 {
+  padding: 20px;
+}
+.pad-30 {
+  padding: 30px;
+}
+.mar-top-10 {
+  padding-top: 10px;
+}
+div .mar-0 {
+  margin: 0px;
+}
+
+.w-80 {
+  width: 80%;
+}
+.gap-30 {
+  gap: 30px;
+}
+.container {
+  width: 1250px;
+  margin: 0px auto;
+  padding: 1px;
+}
+.row {
+  display: flex;
+  width: 100%;
+  margin: 0px auto;
+  gap: 25px;
+}
+.col {
+  flex: 1 1 auto;
+}
+.col-4 {
+  flex: 0 0 32%;
+}
+.col-6 {
+  flex: 0 0 49%;
+}
+.flex {
+  display: flex;
+}
+.justify-center {
+  justify-content: center;
+}
+.items-center {
+  align-items: center;
+}
+.fill-height {
+  height: 100%;
+}
+.fill-width {
+  width: 100%;
+  height: auto;
+}
+.label {
+  font-family: 'Montserrat';
+  font-size: 15px;
+  display: block;
+  margin: 10px 0px;
+  font-weight: 500px;
+}
+.input-text {
+  box-shadow: inset 0px 0px 5px 0px #0003;
+  display: block;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  border: 1px solid #666;
+  border-radius: 7px;
+  line-height: 15px;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100%;
+}
+.input-text:hover,
+.input-text:focus {
+  outline: 0;
+  border-color: #09e;
+  color: #09e;
+}
+.input-textarea {
+  box-shadow: inset 0px 0px 5px 0px #0003;
+  display: block;
+  font-family: 'Montserrat';
+  font-size: 15px;
+  border: 1px solid #666;
+  border-radius: 7px;
+  line-height: 15px;
+  box-sizing: border-box;
+  padding: 10px;
+  line-height: 15px;
+  height: 120px;
+  width: 100%;
+  color: #666;
+}
+.input-textarea:hover,
+.input-textarea:focus {
+  outline: 0;
+  border-color: #09e;
+  color: #09e;
+}
+.card {
+  background-color: #fff;
+  box-shadow: 0px 1px 5px 0px #0003;
+  border-radius: 15px;
+}
+.button {
+  font-family: 'Montserrat';
+  border: 1px solid #09e;
+  color: #fff;
+  background-color: #09e;
+  border-radius: 7px;
+  line-height: 15px;
+  padding: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 10px 0px;
 }
 #app {
   height: 100%;
@@ -11,6 +141,7 @@ body {
   background-color: #104;
   position: fixed;
   z-index: 1000;
+  width: 100%;
 }
 .wrapper {
   position: relative;
@@ -36,8 +167,7 @@ body {
   text-decoration: none;
   text-transform: uppercase;
   font-weight: bold;
-  line-height: 20px;
-  margin: 5px 0px;
+  line-height: 30px;
 }
 .menu-item a,
 .menu-item a:link,
@@ -69,7 +199,10 @@ body {
 .section-title {
   font-size: 24px;
   text-transform: uppercase;
+  margin: 40px 0px;
+  text-align: center;
 }
+
 #servicos {
   padding: 80px 0px;
   background-color: #104;
@@ -82,17 +215,17 @@ body {
   align-items: center;
   width: 80px;
   height: 80px;
-  display: block;
   border-radius: 15px;
   background-color: #09e;
   padding: 1px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 .big-icon img {
   display: block;
-  align-self: center;
   width: 40px;
   height: auto;
-  margin: 20px;
 }
 .service-title {
   font-size: 28px;
@@ -109,6 +242,7 @@ body {
   text-align: center;
   color: #fff;
   font-weight: bold;
+  line-height: 30px;
 }
 
 #blog {
@@ -125,4 +259,8 @@ body {
 .blog-image {
   width: 100%;
   height: auto;
+}
+#contato {
+  background-color: #dff;
+  padding: 80px;
 }

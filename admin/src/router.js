@@ -3,6 +3,7 @@ import { UserStore } from './stores/user.store';
 import ThemePage from './views/site/themePage.vue';
 import PostsPage from './views/posts/postsPage.vue';
 import PostsEditPage from './views/posts/postsEditPage.vue'
+import UsersEditPage from './views/users/usersEditPage.vue'
 import UsersPage from './views/users/usersPage.vue';
 import LoginPage from './views/login/loginPage.vue';
 
@@ -30,6 +31,11 @@ const routes = [
   {
     path: '/cms/posts',
     component: PostsPage,
+    beforeEnter: isLogged
+  },
+  {
+    path: '/cms/user/:id',
+    component: UsersEditPage,
     beforeEnter: isLogged
   },
   {
