@@ -5,9 +5,7 @@ const cors = require('cors');
 const { Storage } = require('@google-cloud/storage');
 const Multer = require('multer');
 
-const storage = new Storage({
-  keyFilename: './keyFilename.json'
-});
+const storage = new Storage();
 
 const bucketName = process.env.BUCKET_GOOGLE;
 
