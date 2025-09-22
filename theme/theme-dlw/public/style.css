@@ -47,6 +47,9 @@ div .mar-0 {
 .col {
   flex: 1 1 auto;
 }
+.col-3 {
+  flex: 0 0 25%;
+}
 .col-4 {
   flex: 0 0 32%;
 }
@@ -94,6 +97,10 @@ div .mar-0 {
   border-color: #09e;
   color: #09e;
 }
+.input-text.error {
+  color: red;
+  border-color: red;
+}
 .input-textarea {
   box-shadow: inset 0px 0px 5px 0px #0003;
   display: block;
@@ -115,6 +122,10 @@ div .mar-0 {
   border-color: #09e;
   color: #09e;
 }
+.input-textarea.error {
+  color: red;
+  border-color: red;
+}
 .card {
   background-color: #fff;
   box-shadow: 0px 1px 5px 0px #0003;
@@ -133,7 +144,7 @@ div .mar-0 {
   text-transform: uppercase;
   margin: 10px 0px;
 }
-#app {
+#site {
   height: 100%;
 }
 #header {
@@ -263,4 +274,57 @@ div .mar-0 {
 #contato {
   background-color: #dff;
   padding: 80px;
+}
+#contactMessage {
+  display: block;
+  font-size: 12px;
+  padding: 1px;
+  width: 100%;
+  margin: 15px 0px;
+}
+
+#contactMessage .error {
+  color: red;
+}
+
+#contactMessage .success {
+  color: green;
+}
+
+#footer {
+  display: block;
+  background-color: #104;
+  color: #fff;
+  padding: 20px 0px;
+}
+#footer h3 {
+  padding: 0px 10px;
+  margin: 0px 0px 25px;
+}
+.footer-logo {
+  height: 40px;
+  width: auto;
+}
+.footer-logo img {
+  height: 100%;
+  width: auto;
+}
+#footer ul {
+  padding: 0px;
+  list-style: none;
+}
+#footer ul li {
+  display: block;
+  margin: 0px;
+}
+
+#footer ul li a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #fff;
+  padding: 10px;
+  display: inline-block;
+}
+#footer ul li a:hover {
+  background-color: #fff1;
 }

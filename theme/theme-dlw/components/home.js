@@ -20,7 +20,7 @@ const html = async () => {
             </div>
           </div>
         </div>
-        <div class="col fill-height flex flex-align-items-center">
+        <div class="col fill-height flex items-center">
           <img
             height="400"
             src="/images/home-layout.png"

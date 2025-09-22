@@ -5,7 +5,12 @@ const cors = require('cors');
 const { Storage } = require('@google-cloud/storage');
 const Multer = require('multer');
 
-const storage = new Storage();
+const gcp_key_content = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+if (!gcp_key_content) {
+  throw new Error("GOOGLE_SERVICE_ACCOUNT_KEY environment variable not set.");
+}
+const credentials = JSON.parse(gcp_key_content);
+const storage = new Storage({ credentials });
 
 const bucketName = process.env.BUCKET_GOOGLE;
 

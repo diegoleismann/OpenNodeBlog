@@ -4,6 +4,7 @@ const Portifolio = require('./components/portifolio.js')
 const Servicos = require('./components/servicos.js')
 const Blog = require('./components/blog.js')
 const Contato = require('./components/contato.js')
+const Footer = require('./components/footer.js')
 const html = async () => {
   try {
     const header = await Header.html();
@@ -12,6 +13,7 @@ const html = async () => {
     const servicos = await Servicos.html();
     const blog = await Blog.html();
     const contato = await Contato.html();
+    const footer = await Footer.html();
     const template = /*html*/`
   <!DOCTYPE html>
   <html>
@@ -23,14 +25,16 @@ const html = async () => {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> 
   </head>
   <body>
-    <div id="app">
+    <div id="site">
       ${header}
       ${home}
       ${portifolio}
       ${servicos}
       ${blog}
       ${contato}
+      ${footer}
     </div>
+    <script src="/form.js" type="text/javascript"></script>
   </body>
   </html>
   `

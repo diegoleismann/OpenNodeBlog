@@ -5,6 +5,9 @@ const server = express();
 
 
 server.use(express.static('public'))
+server.get('/post/:url', async () => {
+
+})
 server.get(['/', '/:page'], async (req, res) => {
 
     try {
@@ -17,7 +20,7 @@ server.get(['/', '/:page'], async (req, res) => {
     }
 });
 
-server.listen(8000, () => {
-    console.log('Server is listening on http://localhost:8000');
+server.listen(80, () => {
+    console.log('Site Rodando!');
 });
 

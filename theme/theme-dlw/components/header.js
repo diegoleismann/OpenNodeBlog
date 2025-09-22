@@ -4,7 +4,7 @@ const html = async () => {
   <div id="header">
     <div class="container">
       <div class="row">
-        <div class="col col-12 flex">
+        <div class="col col-12 flex items-center">
           <a href="#home">
             <img
               class="logo"
