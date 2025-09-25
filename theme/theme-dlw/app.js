@@ -1,7 +1,4 @@
 
-
-
-
 const Blog = require('./components/blog.js')
 const Contato = require('./components/contato.js')
 
@@ -14,7 +11,7 @@ module.exports = {
       portifolio = await Portifolio.html();
       servicos = await Servicos.html();
       blog = await Blog.html();
-      ccontato = await Contato.html();
+      contato = await Contato.html();
     } catch (e) {
       console.log(e);
     }

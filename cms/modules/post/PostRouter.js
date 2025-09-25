@@ -5,6 +5,7 @@ const Auth = require('../core/authorization.js');
 const Post = new PostController();
 
 router.get('/', Post.getPublic)
+router.get('/url/:url', Post.getByUrl);
 router.get('/search/:text/:page', Auth.authorizationToken, Post.getBySearch);
 router.get('/search/:text', Auth.authorizationToken, Post.getBySearch);
 router.get('/page/:page', Auth.authorizationToken, Post.getByPage);

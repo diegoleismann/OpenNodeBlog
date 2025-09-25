@@ -1,26 +1,15 @@
 const express = require('express');
-const Index = require('./index.js')
+const HomeView = require('./views/home.js');
+const notFoundView = require('./views/notFound.js');
+const PostView = require('./views/post.js')
 const server = express();
 
-
-
 server.use(express.static('public'))
-server.get('/post/:url', async () => {
-
-})
-server.get(['/', '/:page'], async (req, res) => {
-
-    try {
-        const index = await Index.html();
-        console.log(index);
-        res.send(index);
-    } catch (error) {
-        console.error('SSR Error:', error);
-        res.status(500).send('Internal Server Error');
-    }
-});
+server.get('/post/:url', PostView)
+server.get('/', HomeView);
+server.get('/:page', notFoundView);
 
 server.listen(80, () => {
-    console.log('Site Rodando!');
+  console.log('Site Rodando!');
 });
 

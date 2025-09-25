@@ -17,6 +17,23 @@ const Theme = {
       return []
     }
 
+  },
+  getPostByUrl: async (url) => {
+    try {
+      const response = await fetch(base_url + `/post/url/${url}`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+
+      const post = data.post ? data.post : null;
+      return post
+    } catch (e) {
+      console.log('Error on GetPosts check ' + base_url)
+      return []
+    }
   }
 }
 

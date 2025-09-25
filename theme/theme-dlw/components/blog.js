@@ -4,8 +4,9 @@ const html = async () => {
   let listPosts = posts.map((item) => {
     return /*html*/`
     <div class="col col-4">
-      <img class="blog-image" src="/images/blog-image.png"/>
-      <h3>${item.title}</h3>
+      <a href="/post/${item.url}">
+        <h3>${item.title}</h3>
+      </a>
     </div>
     `
   })

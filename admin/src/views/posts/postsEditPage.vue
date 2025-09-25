@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import Layout from '../../components/layout/Layout.vue'
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, reactive, ref } from 'vue'
 import { PostStore } from '../../stores/post.store'
 import { UserStore } from '../../stores/user.store'
 import { DateISOFormat, DateFormat } from '../../helper/date'
@@ -29,23 +29,43 @@ const SavePost = async () => {
     PostStore.update()
   }
 }
+const editor = ref(null)
+const quillOptions = reactive({
+  theme: 'snow',
+  modules: {
+    toolbar: '#toolbar',
+  },
+})
 onMounted(() => {
   UserStore.getBySearch()
   if (route.params.id) PostStore.getById(route.params.id)
   if (!route.params.id || route.params.id === '') PostStore.clear()
   if (!PostStore.author_id) {
-    const user = UserStore.get()
+    const user = UserStore.getLogged()
     PostStore.author_id = user._id
+  }
+  const quill = editor.value.getQuill()
+
+  if (quill) {
+    //`https://picsum.photos/id/1/200/300`
+
+    quill.getModule('toolbar').addHandler('image', () => {
+      const range = quill.getSelection()
+      const imageUrl = quill.getText(range.index, range.length)
+      if (range) {
+        quill.insertEmbed(range.index, 'image', imageUrl)
+      }
+    })
   }
 })
 </script>
 
 <template>
-  <layout>
-    <v-row class="fill-height">
-      <v-col class="fill-height">
-        <v-card class="ma-4 fill-height">
-          <v-row class="fill-height ma-0">
+  <Layout>
+    <div class="mainpage">
+      <div class="overflow-hidden">
+        <v-card class="overflow-hidden">
+          <v-row class="overflow-hidden">
             <v-col cols="3">
               <h2>Edit Post</h2>
 
@@ -140,21 +160,64 @@ onMounted(() => {
             </v-col>
             <v-col
               cols="9"
-              class="fill-height"
+              class="flex-column"
             >
-              <div class="fill-height">
+              <div id="toolbar">
+                <select class="ql-header">
+                  <option :value="1">h1</option>
+                  <option :value="2">h2</option>
+                  <option :value="3">h2</option>
+                  <option :value="3">h4</option>
+                  <option :value="false">p</option>
+                </select>
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <span class="ql-formats">
+                  <button
+                    class="ql-list"
+                    value="ordered"
+                    ngbPopover="Ordered list"
+                    triggers="mouseenter:mouseleave"
+                  ></button>
+                  <button
+                    class="ql-list"
+                    value="bullet"
+                    ngbPopover="Bulleted list"
+                    triggers="mouseenter:mouseleave"
+                  ></button>
+                </span>
+                <span
+                  class="ql-formats"
+                  ngbPopover="Alignment"
+                  triggers="mouseenter:mouseleave"
+                >
+                  <select class="ql-align">
+                    <option selected></option>
+                    <option value="center"></option>
+                    <option value="justify"></option>
+                    <option value="right"></option>
+                  </select>
+                </span>
+                <button class="ql-link"></button>
+                <button class="ql-blockquote"></button>
+                <button class="ql-code-block"></button>
+                <button class="ql-image"></button>
+              </div>
+              <div id="editor">
                 <quill-editor
+                  ref="editor"
                   v-model:content="PostStore.content"
                   @update:model-value="PostStore.content = $event"
+                  :options="quillOptions"
                   contentType="html"
                   theme="snow"
-                >
-                </quill-editor>
+                />
               </div>
             </v-col>
           </v-row>
         </v-card>
-      </v-col>
-    </v-row>
-  </layout>
+      </div>
+    </div>
+  </Layout>
 </template>

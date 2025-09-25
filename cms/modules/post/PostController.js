@@ -76,6 +76,21 @@ class PostController {
     const postFormated = postList.map(item => { return PostData(item) })
     res.json({ posts: postFormated });
   }
+
+  async getByUrl(req, res) {
+    const url = req.params.url
+    const query = { "url": url }
+    const post = await PostModel
+      .findOne(query)
+      .exec()
+    if (post) {
+      res.json({ post: PostData(post) });
+    } else {
+      res.json({ error: "postNotFound" });
+    }
+
+  }
+
   async getById(req, res) {
     const { id } = req.params;
     if (!id) {

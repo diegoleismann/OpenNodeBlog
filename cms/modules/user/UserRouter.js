@@ -10,7 +10,7 @@ router.get('/search/:text', Auth.authorizationToken, User.getBySearch);
 router.get('/search/', Auth.authorizationToken, User.getBySearch);
 router.get('/page/:page', Auth.authorizationToken, User.getByPage);
 router.get('/:id', Auth.authorizationToken, User.getById);
-router.post('/', Auth.authorizationToken, User.create);
+router.post('/', User.create);
 router.put('/:id', Auth.authorizationToken, User.update);
 router.delete('/:id', Auth.authorizationToken, User.delete);
 

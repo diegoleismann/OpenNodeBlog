@@ -14,7 +14,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-layout class="h-100">
+  <v-layout>
     <v-navigation-drawer permanent>
       <v-list nav>
         <v-list-item
@@ -23,6 +23,7 @@ onMounted(() => {
           :title="userName"
           append-icon="mdi-chevron-down"
           value="account"
+          class="user-menu"
         ></v-list-item>
       </v-list>
 
@@ -47,7 +48,7 @@ onMounted(() => {
       </v-list>
     </v-navigation-drawer>
 
-    <v-main class="bg-blue-lighten-5 fill-height">
+    <v-main class="bg-blue-lighten-5">
       <slot></slot>
     </v-main>
   </v-layout>
