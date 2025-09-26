@@ -9,7 +9,6 @@ const postView = async (req, res) => {
         return;
     }
 
-    console.log(post);
     const content = `<div id="post">
     <div class="container">
         <div class="row justify-center">
@@ -27,7 +26,6 @@ const postView = async (req, res) => {
 
     const title = post.title;
     const index = await Index.html(title, content)
-    console.log(index, 'INDEX');
     res.send(index);
 }
 module.exports = postView

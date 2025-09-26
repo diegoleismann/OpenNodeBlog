@@ -25,7 +25,8 @@ const multer = Multer({
 
 const indexRouter = require('../index/index-router.js');
 const usersRouter = require('../user/UserRouter.js');
-const postRouter = require('../post/PostRouter.js')
+const postRouter = require('../post/PostRouter.js');
+const contactRouter = require('../contact/ContactRouter.js');
 const docs = require('../../docs/index.js')
 const app = express();
 
@@ -35,8 +36,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/../../../cms/files')));
 app.use(express.static('theme/theme-one/assets'));
 
+
+const safeOrigin = process.env.SAFE_ORIGIN;
+let origins = []
+if (safeOrigin) {
+  origins = (safeOrigin && safeOrigin.split(',').length > 1) ? safeOrigin.split(',') : [safeOrigin];
+}
+console.log('SAFE_ORIGIN', origins);
 var corsOptions = {
-  origin: [process.env.FRONTEND_URL, 'http://localhost:8000'],
+  origin: origins,
   optionsSuccessStatus: 200,
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
@@ -51,6 +59,7 @@ app.use((req, res, next) => {
 })
 
 //app.use('/', indexRouter);
+app.use('/api/contact', contactRouter);
 app.use('/api/user', usersRouter);
 app.use('/api/post', postRouter)
 app.use('/api/docs', (req, res) => {

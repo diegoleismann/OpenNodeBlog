@@ -78,10 +78,13 @@ const onload = () => {
     if (onValidateErrors(errors)) {
       return;
     }
-
+    const json = Object.fromEntries(data.entries());
     const options = {
       method: 'POST',
-      body: data
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(json)
     }
 
     try {
