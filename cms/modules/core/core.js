@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -5,12 +6,10 @@ const cors = require('cors');
 const { Storage } = require('@google-cloud/storage');
 const Multer = require('multer');
 
-const gcp_key_content = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
-if (!gcp_key_content) {
-  throw new Error("GOOGLE_SERVICE_ACCOUNT_KEY environment variable not set.");
-}
-const credentials = JSON.parse(gcp_key_content);
-const storage = new Storage({ credentials });
+/*
+//const credentials = JSON.parse(gcp_key_content);
+*/
+const storage = new Storage();
 
 const bucketName = process.env.BUCKET_GOOGLE;
 
@@ -47,7 +46,7 @@ var corsOptions = {
   origin: origins,
   optionsSuccessStatus: 200,
   credentials: true,
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
 }
 
 //[]TASK add to database list of domains cors

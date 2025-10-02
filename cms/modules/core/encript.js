@@ -1,7 +1,12 @@
 const crypto = require('node:crypto');
 const RandomString = require('./randomString');
-const key = Buffer.from(process.env.SESSION_KEY, 'utf-8');
-const iv = Buffer.from(process.env.SESSION_IV, 'utf-8');
+const keyString = process.env.SESSION_KEY
+const ivString = process.env.SESSION_IV
+if (!keyString || !ivString) {
+  throw new Error('SESSION_KEY and SESSION_IV must be set in environment variables');
+}
+const key = Buffer.from(keyString, 'utf-8');
+const iv = Buffer.from(ivString, 'utf-8');
 const algorithm = 'aes-256-cbc'
 
 const cipher = (text) => {
