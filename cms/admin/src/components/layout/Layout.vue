@@ -21,8 +21,6 @@ onMounted(() => {
           :prepend-avatar="userImage"
           :subtitle="userEmail"
           :title="userName"
-          append-icon="mdi-chevron-down"
-          value="account"
           class="user-menu"
         ></v-list-item>
       </v-list>

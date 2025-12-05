@@ -62,39 +62,98 @@ onMounted(() => {
 
 <template>
   <Layout>
-    <div class="mainpage">
-      <div class="overflow-hidden">
-        <v-card class="overflow-hidden">
-          <v-row class="overflow-hidden">
+    <div class="pa-4">
+      <v-card>
+        <v-card-title>
+          <v-toolbar class="bg-white">
+            <v-title> <RouterLink to="/cms/posts">Posts </RouterLink></v-title>
+            <v-divider
+              class="mx-2"
+              vertical
+              opacity="0"
+            >
+            </v-divider>
+
+            <v-btn
+              class="bg-blue text-white"
+              @click="SavePost"
+            >
+              Save
+            </v-btn>
+            <v-divider
+              class="mx-2"
+              vertical
+              opacity="0"
+            >
+            </v-divider>
+            <v-btn
+              variant="outlined"
+              class="bg-white"
+            >
+              Preview
+            </v-btn>
+          </v-toolbar>
+        </v-card-title>
+        <div>
+          <v-row class="mx-0">
+            <v-col
+              cols="9"
+              class="flex-column pa-4"
+            >
+              <div id="toolbar">
+                <select class="ql-header">
+                  <option :value="1">h1</option>
+                  <option :value="2">h2</option>
+                  <option :value="3">h2</option>
+                  <option :value="3">h4</option>
+                  <option :value="false">p</option>
+                </select>
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <span class="ql-formats">
+                  <button
+                    class="ql-list"
+                    value="ordered"
+                    ngbPopover="Ordered list"
+                    triggers="mouseenter:mouseleave"
+                  ></button>
+                  <button
+                    class="ql-list"
+                    value="bullet"
+                    ngbPopover="Bulleted list"
+                    triggers="mouseenter:mouseleave"
+                  ></button>
+                </span>
+                <span
+                  class="ql-formats"
+                  ngbPopover="Alignment"
+                  triggers="mouseenter:mouseleave"
+                >
+                  <select class="ql-align">
+                    <option selected></option>
+                    <option value="center"></option>
+                    <option value="justify"></option>
+                    <option value="right"></option>
+                  </select>
+                </span>
+                <button class="ql-link"></button>
+                <button class="ql-blockquote"></button>
+                <button class="ql-code-block"></button>
+                <button class="ql-image"></button>
+              </div>
+              <div id="editor">
+                <quill-editor
+                  ref="editor"
+                  v-model:content="PostStore.content"
+                  @update:model-value="PostStore.content = $event"
+                  :options="quillOptions"
+                  contentType="html"
+                  theme="snow"
+                />
+              </div>
+            </v-col>
             <v-col cols="3">
-              <h2>Edit Post</h2>
-
-              <v-row class="my-1">
-                <v-col cols="6">
-                  <v-btn
-                    block
-                    class="bg-blue text-white"
-                    @click="SavePost"
-                  >
-                    Save
-                  </v-btn>
-                </v-col>
-                <v-col cols="6">
-                  <a
-                    target="_blank"
-                    href="/preview/"
-                  >
-                    <v-btn
-                      block
-                      variant="outlined"
-                      class="bg-white"
-                    >
-                      Ver
-                    </v-btn>
-                  </a>
-                </v-col>
-              </v-row>
-
               <v-text-field
                 :model-value="PostStore.created_at"
                 @blur="updateCreatedAt($event.target.value)"
@@ -158,66 +217,14 @@ onMounted(() => {
                 class="mb-3"
               ></v-select>
             </v-col>
-            <v-col
-              cols="9"
-              class="flex-column"
-            >
-              <div id="toolbar">
-                <select class="ql-header">
-                  <option :value="1">h1</option>
-                  <option :value="2">h2</option>
-                  <option :value="3">h2</option>
-                  <option :value="3">h4</option>
-                  <option :value="false">p</option>
-                </select>
-                <button class="ql-bold"></button>
-                <button class="ql-italic"></button>
-                <button class="ql-underline"></button>
-                <span class="ql-formats">
-                  <button
-                    class="ql-list"
-                    value="ordered"
-                    ngbPopover="Ordered list"
-                    triggers="mouseenter:mouseleave"
-                  ></button>
-                  <button
-                    class="ql-list"
-                    value="bullet"
-                    ngbPopover="Bulleted list"
-                    triggers="mouseenter:mouseleave"
-                  ></button>
-                </span>
-                <span
-                  class="ql-formats"
-                  ngbPopover="Alignment"
-                  triggers="mouseenter:mouseleave"
-                >
-                  <select class="ql-align">
-                    <option selected></option>
-                    <option value="center"></option>
-                    <option value="justify"></option>
-                    <option value="right"></option>
-                  </select>
-                </span>
-                <button class="ql-link"></button>
-                <button class="ql-blockquote"></button>
-                <button class="ql-code-block"></button>
-                <button class="ql-image"></button>
-              </div>
-              <div id="editor">
-                <quill-editor
-                  ref="editor"
-                  v-model:content="PostStore.content"
-                  @update:model-value="PostStore.content = $event"
-                  :options="quillOptions"
-                  contentType="html"
-                  theme="snow"
-                />
-              </div>
-            </v-col>
           </v-row>
-        </v-card>
-      </div>
+        </div>
+      </v-card>
     </div>
   </Layout>
 </template>
+<style scoped>
+#editor {
+  height: 500px;
+}
+</style>

@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs').promises;
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -33,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/../../../cms/files')));
-app.use(express.static('theme/theme-one/assets'));
+app.use('/cms/assets', express.static(path.join(__dirname, '/../../../cms/admin/dist/assets')));
 
 
 const safeOrigin = process.env.SAFE_ORIGIN;
@@ -64,7 +65,10 @@ app.use('/api/post', postRouter)
 app.use('/api/docs', (req, res) => {
   res.json(docs);
 })
-
+app.use('/cms', async (req, res) => {
+  const html = await fs.readFile('./cms/admin/dist/index.html');
+  res.end(html);
+})
 app.post('/upload', multer.single('file'), async (req, res) => {
   //Verifica se veio arquivo na requisição
   if (!req.file) {
